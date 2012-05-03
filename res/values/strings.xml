@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Name of app, shown when installing/uninstalling extension -->
+    <string name="app_name">Sample control extension</string>
+    <!-- Title of preference activity -->
+    <string name="preference_activity_title">Sample control settings</string>
+    <!-- Name of extension, shown in preferences -->
+    <string name="extension_name">Sample control</string>
+    <!-- Configuration title shown in preferences -->
+    <string name="configuration_text">Sample control settings</string>
+    <!-- Menu option shown in preferences -->
+    <string name="preference_option_read_me">READ ME</string>
+    <!-- Read me text shown in dialog -->
+    <string name="preference_option_read_me_txt">The sample control extension starts an animation on the accessory when started. This extension supports both SmartWatch and Smart Wireless Headset pro.\n\nIn SmartWatch the animation can be stopped by tapping on the screen. \n\nSmart Wireless Headset pro shows a scrolling text that can be paused and resumed with Play/Pause key. The text can also be manually controlled by using the the Previous and Next Keys. Control animation speed can be changed using Volume up and Volume down key.</string>
+
+    <!-- Text drawn in control on Smart Wireless Headset pro-->
+    <string name="sample_control_headset_pro_text">Press Prev or Next</string>
+
+</resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="128px"
+    android:layout_height="128px">
+    <ImageView
+        android:id="@+id/dpad"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:paddingRight="16px"
+        android:paddingLeft="16px"
+        android:src="@drawable/dpad" />
+    <ImageView
+        android:id="@+id/dpad"
+        android:layout_width="64px"
+        android:layout_height="64px"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/esc" />
+    
+    <ImageView
+        android:id="@+id/dpad"
+        android:layout_width="64px"
+        android:layout_height="64px"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/menu" />
+
+    <ImageView
+        android:id="@+id/dpad"
+        android:layout_width="64px"
+        android:layout_height="64px"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/back" />
+
+    <ImageView
+        android:id="@+id/dpad"
+        android:layout_width="64px"
+        android:layout_height="64px"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/home" />
+
+</RelativeLayout>

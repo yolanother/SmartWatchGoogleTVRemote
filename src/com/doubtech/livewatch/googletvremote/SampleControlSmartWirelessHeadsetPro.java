@@ -29,7 +29,7 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.sonyericsson.extras.liveware.extension.controlsample;
+package com.doubtech.livewatch.googletvremote;
 
 import com.sonyericsson.extras.liveware.aef.control.Control;
 import com.sonyericsson.extras.liveware.extension.util.SmartWirelessHeadsetProUtil;

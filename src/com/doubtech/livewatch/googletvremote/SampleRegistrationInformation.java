@@ -29,7 +29,7 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.sonyericsson.extras.liveware.extension.controlsample;
+package com.doubtech.livewatch.googletvremote;
 
 import com.sonyericsson.extras.liveware.aef.registration.Registration;
 import com.sonyericsson.extras.liveware.extension.util.ExtensionUtils;
@@ -85,7 +85,7 @@ public class SampleRegistrationInformation extends RegistrationInformation {
      */
     @Override
     public ContentValues getExtensionRegistrationConfiguration() {
-        String iconHostapp = ExtensionUtils.getUriString(mContext, R.drawable.icon);
+        String iconHostapp = ExtensionUtils.getUriString(mContext, R.drawable.app_icon);
         String iconExtension = ExtensionUtils
                 .getUriString(mContext, R.drawable.icon_extension);
         String iconExtensionBw = ExtensionUtils.getUriString(mContext,

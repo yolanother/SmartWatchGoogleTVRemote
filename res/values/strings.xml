@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Name of app, shown when installing/uninstalling extension -->
-    <string name="app_name">Sample control extension</string>
+    <string name="app_name">GoogleTV Watch Remote</string>
     <!-- Title of preference activity -->
-    <string name="preference_activity_title">Sample control settings</string>
+    <string name="preference_activity_title">GTV Watch Remote</string>
     <!-- Name of extension, shown in preferences -->
-    <string name="extension_name">Sample control</string>
+    <string name="extension_name">GTV Remote</string>
     <!-- Configuration title shown in preferences -->
-    <string name="configuration_text">Sample control settings</string>
+    <string name="configuration_text">GTV Watch Remote Settings</string>
     <!-- Menu option shown in preferences -->
     <string name="preference_option_read_me">READ ME</string>
     <!-- Read me text shown in dialog -->

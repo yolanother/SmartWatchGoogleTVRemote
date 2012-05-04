@@ -43,8 +43,8 @@ public class ExtensionReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, final Intent intent) {
-        Log.d(SampleExtensionService.LOG_TAG, "onReceive: " + intent.getAction());
-        intent.setClass(context, SampleExtensionService.class);
+        Log.d(GTVRemoteExtensionService.LOG_TAG, "onReceive: " + intent.getAction());
+        intent.setClass(context, GTVRemoteExtensionService.class);
         context.startService(intent);
     }
 }

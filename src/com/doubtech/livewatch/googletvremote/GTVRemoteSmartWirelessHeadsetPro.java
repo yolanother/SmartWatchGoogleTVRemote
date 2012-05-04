@@ -51,7 +51,7 @@ import android.util.Log;
  * accessory. This class exists in one instance for every supported host
  * application that we have registered to.
  */
-class SampleControlSmartWirelessHeadsetPro extends ControlExtension {
+class GTVRemoteSmartWirelessHeadsetPro extends ControlExtension {
 
     private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.RGB_565;
 
@@ -90,7 +90,7 @@ class SampleControlSmartWirelessHeadsetPro extends ControlExtension {
      * @param context The context.
      * @param handler The handler to use
      */
-    SampleControlSmartWirelessHeadsetPro(final String hostAppPackageName, final Context context,
+    GTVRemoteSmartWirelessHeadsetPro(final String hostAppPackageName, final Context context,
             Handler handler) {
         super(context, hostAppPackageName);
         if (handler == null) {
@@ -135,7 +135,7 @@ class SampleControlSmartWirelessHeadsetPro extends ControlExtension {
 
     @Override
     public void onDestroy() {
-        Log.d(SampleExtensionService.LOG_TAG, "SampleControlSmartWirelessHeadsetPro onDestroy");
+        Log.d(GTVRemoteExtensionService.LOG_TAG, "SampleControlSmartWirelessHeadsetPro onDestroy");
         stopAnimation();
         mHandler = null;
     };
@@ -154,13 +154,13 @@ class SampleControlSmartWirelessHeadsetPro extends ControlExtension {
     public void onResume() {
         mIsVisible = true;
 
-        Log.d(SampleExtensionService.LOG_TAG, "Starting animation");
+        Log.d(GTVRemoteExtensionService.LOG_TAG, "Starting animation");
         startAnimation();
     }
 
     @Override
     public void onPause() {
-        Log.d(SampleExtensionService.LOG_TAG, "Stopping animation");
+        Log.d(GTVRemoteExtensionService.LOG_TAG, "Stopping animation");
         mIsVisible = false;
 
         if (mIsShowingAnimation) {

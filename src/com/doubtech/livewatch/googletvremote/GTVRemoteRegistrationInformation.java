@@ -42,7 +42,7 @@ import android.content.Context;
 /**
  * Provides information needed during extension registration
  */
-public class SampleRegistrationInformation extends RegistrationInformation {
+public class GTVRemoteRegistrationInformation extends RegistrationInformation {
 
     final Context mContext;
 
@@ -51,7 +51,7 @@ public class SampleRegistrationInformation extends RegistrationInformation {
      *
      * @param context The context
      */
-    protected SampleRegistrationInformation(Context context) {
+    protected GTVRemoteRegistrationInformation(Context context) {
         if (context == null) {
             throw new IllegalArgumentException("context == null");
         }
@@ -94,12 +94,12 @@ public class SampleRegistrationInformation extends RegistrationInformation {
         ContentValues values = new ContentValues();
 
         values.put(Registration.ExtensionColumns.CONFIGURATION_ACTIVITY,
-                SamplePreferenceActivity.class.getName());
+                GTVRemotePreferenceActivity.class.getName());
         values.put(Registration.ExtensionColumns.CONFIGURATION_TEXT,
                 mContext.getString(R.string.configuration_text));
         values.put(Registration.ExtensionColumns.NAME, mContext.getString(R.string.extension_name));
         values.put(Registration.ExtensionColumns.EXTENSION_KEY,
-                SampleExtensionService.EXTENSION_KEY);
+                GTVRemoteExtensionService.EXTENSION_KEY);
         values.put(Registration.ExtensionColumns.HOST_APP_ICON_URI, iconHostapp);
         values.put(Registration.ExtensionColumns.EXTENSION_ICON_URI, iconExtension);
         values.put(Registration.ExtensionColumns.EXTENSION_ICON_URI_BLACK_WHITE, iconExtensionBw);
@@ -112,10 +112,7 @@ public class SampleRegistrationInformation extends RegistrationInformation {
 
     @Override
     public boolean isDisplaySizeSupported(int width, int height) {
-        return ((width == SampleControlSmartWatch.getSupportedControlWidth(mContext) && height == SampleControlSmartWatch
-                .getSupportedControlHeight(mContext)) || (width == SampleControlSmartWirelessHeadsetPro
-                .getSupportedControlWidth(mContext) && height == SampleControlSmartWirelessHeadsetPro
-                .getSupportedControlHeight(mContext)));
+        return true;
     }
 
 }

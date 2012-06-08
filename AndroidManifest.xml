@@ -14,7 +14,23 @@
             </intent-filter>
         </activity>
 
+	    <activity android:name="com.google.android.apps.tvremote.DeviceFinder"
+	              android:theme="@android:style/Theme.Translucent.NoTitleBar"
+	              android:label="@string/finder_label"
+	              android:launchMode="singleTop"/>
+	
+	    <activity android:name="com.google.android.apps.tvremote.PairingActivity"
+	              android:theme="@android:style/Theme.Translucent.NoTitleBar"
+	              android:label="@string/pairing_activity_label"
+	              android:launchMode="singleTop"/>
+
         <service android:name=".GTVRemoteExtensionService" />
+    
+        <service android:name="com.google.android.apps.tvremote.CoreService"
+                 android:label="@string/core_service_label"
+                 android:enabled="true"
+                 android:exported="true"
+                 android:permission="android.permission.INTERNET"/>
 
         <receiver android:name=".ExtensionReceiver">
             <intent-filter>
@@ -46,4 +62,11 @@
         </receiver>
 
     </application>
+    
+  <uses-feature android:required="true" android:name="android.hardware.touchscreen" />
+  <uses-feature android:required="true" android:name="android.hardware.wifi" />
+  
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+  <uses-permission android:name="android.permission.VIBRATE" />
 </manifest>

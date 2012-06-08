@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.doubtech.livewatch.googletvremote;
 
 import com.doubtech.livewatch.googletvremote.CoreServiceHandler.CoreServiceHandlerInterface;
+import com.google.android.apps.tvremote.ConnectionManager;
 import com.google.android.apps.tvremote.CoreService;
 import com.google.android.apps.tvremote.DeviceFinder;
 import com.google.android.apps.tvremote.PairingActivity;
@@ -50,6 +51,7 @@ import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -99,6 +101,8 @@ public class GTVRemotePreferenceActivity extends PreferenceActivity implements C
 	  private boolean isScreenDimmed;
 
 	  private Handler handler;
+	private Preference mPairingOk;
+	private Preference mDeviceFinder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -110,16 +114,17 @@ public class GTVRemotePreferenceActivity extends PreferenceActivity implements C
         addPreferencesFromResource(R.xml.preference);
 
         // Handle read me
-        Preference preference = findPreference(getText(R.string.preference_key_read_me));
+        /*Preference preference = findPreference(getText(R.string.preference_key_read_me));
         preference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             public boolean onPreferenceClick(Preference preference) {
                 showDialog(DIALOG_READ_ME);
                 return true;
             }
-        });
+        });*/
         
-        findPreference(getText(R.string.pairing_ok)).setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        mPairingOk = findPreference(getText(R.string.preference_key_pairing_ok));
+        mPairingOk.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			
 			@Override
 			public boolean onPreferenceClick(Preference preference) {
@@ -127,8 +132,11 @@ public class GTVRemotePreferenceActivity extends PreferenceActivity implements C
 			    return true;
 			}
 		});
+        mPairingOk.setEnabled(false);
         
-        findPreference(getText(R.string.finder_label)).setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        mDeviceFinder = findPreference(getText(R.string.preference_key_finder_label));
+        mDeviceFinder.setEnabled(false);
+        mDeviceFinder.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			
 			@Override
 			public boolean onPreferenceClick(Preference preference) {
@@ -203,9 +211,12 @@ public class GTVRemotePreferenceActivity extends PreferenceActivity implements C
 		   * Starts the box selection dialog.
 		   */
 		  private final void showSwitchBoxActivity() {
+			ConnectionManager connectionManager = mCoreServiceHandler.getConnectionManager();
+			RemoteDevice target = connectionManager.getTarget();
+			ArrayList<RemoteDevice> recent = connectionManager.getRecentlyConnected();
 		    startActivityForResult(
-		        DeviceFinder.createConnectIntent(this, mCoreServiceHandler.getConnectionManager().getTarget(),
-		            mCoreServiceHandler.getConnectionManager().getRecentlyConnected()), CODE_SWITCH_BOX);
+		        DeviceFinder.createConnectIntent(this, target, recent), 
+		        CODE_SWITCH_BOX);
 		  }
 		  
 
@@ -226,13 +237,13 @@ public class GTVRemotePreferenceActivity extends PreferenceActivity implements C
 
 		@Override
 		public void onServiceAvailable(CoreService coreService) {
-			// TODO Auto-generated method stub
-			
+			mDeviceFinder.setEnabled(true);
+			mPairingOk.setEnabled(true);
 		}
 
 		@Override
 		public void onServiceDisconnecting(CoreService coreService) {
-			// TODO Auto-generated method stub
-			
+			mDeviceFinder.setEnabled(false);
+			mPairingOk.setEnabled(false);			
 		}
 }

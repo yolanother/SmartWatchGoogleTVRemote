@@ -2,8 +2,10 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Read me -->
     <Preference
-        android:key="@string/preference_key_read_me"
-        android:title="@string/preference_option_read_me" />
+        android:key="@string/preference_key_pairing_ok"
+        android:title="@string/pairing_ok" />
+    <Preference
+        android:key="@string/preference_key_finder_label"
+        android:title="@string/finder_label" />
 </PreferenceScreen>

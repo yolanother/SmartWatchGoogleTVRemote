@@ -2,4 +2,6 @@
 <!-- Here we put strings that doesn't have to go to localization -->
 <resources>
     <string name="preference_key_read_me">preference_key_read_me</string>
+    <string name="preference_key_pairing_ok">preference_key_pairing_ok</string>
+    <string name="preference_key_finder_label">preference_key_finder_label</string>
 </resources>

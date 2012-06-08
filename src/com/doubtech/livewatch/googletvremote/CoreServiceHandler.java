@@ -44,7 +44,9 @@ import java.util.concurrent.TimeUnit;
  *
  */
 public class CoreServiceHandler {
-  private static final String LOG_TAG = "CoreServiceActivity";
+  private static final String TAG = "CoreServiceHandler";
+
+private static final String LOG_TAG = "CoreServiceActivity";
 
   /**
    * Used to connect to the background service.
@@ -89,6 +91,7 @@ public static interface CoreServiceHandlerInterface {
   private void connectToService() {
     serviceConnection = new ServiceConnection() {
       public void onServiceConnected(ComponentName name, IBinder service) {
+    	Log.d(TAG, "Connecting to service...");
         coreService = ((CoreService.LocalBinder) service).getService();
         runQueuedRunnables();
         onServiceAvailable(coreService);
@@ -99,6 +102,7 @@ public static interface CoreServiceHandlerInterface {
         coreService = null;
       }
     };
+    Log.d(TAG, "Binding service...");
     Intent intent = new Intent(mContext, CoreService.class);
     mContext.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
   }

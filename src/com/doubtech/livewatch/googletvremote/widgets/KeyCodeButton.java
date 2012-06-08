@@ -21,18 +21,20 @@ import com.google.anymote.Key.Code;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 /**
  * Button of the remote controller that has remote controller keycode assigned,
  * and supports displaying highlight with the support of {@link HighlightView}.
  *
  */
-public class KeyCodeButton extends ImageButton {
+public class KeyCodeButton extends ImageView {
 
   private final Code keyCode;
   private boolean wasPressed;
@@ -84,7 +86,9 @@ public class KeyCodeButton extends ImageButton {
   }
 
   private void initialize() {
-    setScaleType(ScaleType.CENTER_INSIDE);
+    //setScaleType(ScaleType.CENTER_INSIDE);
+    //setBackgroundDrawable(null);
+    //setBackgroundColor(Color.TRANSPARENT);
   }
 
   private void enableKeyCodeAction() {

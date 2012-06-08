@@ -92,6 +92,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_weight="1"
+            android:src="@drawable/ch_down"
             app:key_code="KEYCODE_CHANNEL_DOWN" />
 
         <com.doubtech.livewatch.googletvremote.widgets.KeyCodeButton

@@ -1,0 +1,7 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="128px"
+    android:layout_height="128px">
+    <include layout="@layout/rp_dpad"/>
+    <include layout="@layout/rp_playback_controls"/>
+</FrameLayout>

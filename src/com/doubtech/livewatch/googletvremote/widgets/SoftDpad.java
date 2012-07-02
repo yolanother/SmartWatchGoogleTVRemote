@@ -351,6 +351,10 @@ private Rect leftRect;
       boolean playSound) {
     if (listener != null) {
       switch (move) {
+        case CENTER:
+          if(pressed) {
+              onCenterAction();                  
+          }
         case UP:
         case DOWN:
         case LEFT:
@@ -363,6 +367,10 @@ private Rect leftRect;
             }
             playSound();
           }
+          return;
+      }
+      if(pressed) { 
+          onCenterAction();
       }
     }
   }

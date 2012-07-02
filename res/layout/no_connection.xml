@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/no_connection_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#33cccccc"
+    android:visibility="gone" >
+
+    <TextView
+        android:id="@+id/no_connection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/no_connection"
+         />
+
+    <TextView
+        android:id="@+id/see_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/no_connection"
+        android:text="@string/see_phone"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+</RelativeLayout>

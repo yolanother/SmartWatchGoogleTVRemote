@@ -31,8 +31,6 @@
 
 package com.doubtech.livewatch.googletvremote;
 
-import com.doubtech.livewatch.googletvremote.CoreServiceHandler.CoreServiceHandlerInterface;
-import com.google.android.apps.tvremote.CoreService;
 import com.sonyericsson.extras.liveware.extension.util.ExtensionService;
 import com.sonyericsson.extras.liveware.extension.util.control.ControlExtension;
 import com.sonyericsson.extras.liveware.extension.util.registration.DeviceInfo;
@@ -43,7 +41,7 @@ import com.sonyericsson.extras.liveware.extension.util.registration.Registration
  * The Sample Extension Service handles registration and keeps track of all
  * controls on all accessories.
  */
-public class GTVRemoteExtensionService extends ExtensionService implements CoreServiceHandlerInterface {
+public class GTVRemoteExtensionService extends ExtensionService {
 
     public static final String EXTENSION_KEY = "com.doubtech.livewatch.googletvremote.key";
 
@@ -87,16 +85,4 @@ public class GTVRemoteExtensionService extends ExtensionService implements CoreS
         }
         throw new IllegalArgumentException("No control for: " + hostAppPackageName);
     }
-
-	@Override
-	public void onServiceAvailable(CoreService coreService) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onServiceDisconnecting(CoreService coreService) {
-		// TODO Auto-generated method stub
-		
-	}
 }

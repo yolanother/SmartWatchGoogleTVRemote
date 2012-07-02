@@ -30,15 +30,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package com.doubtech.livewatch.googletvremote;
 
-import com.doubtech.livewatch.googletvremote.CoreServiceHandler.CoreServiceHandlerInterface;
-import com.google.android.apps.tvremote.ConnectionManager;
-import com.google.android.apps.tvremote.CoreService;
-import com.google.android.apps.tvremote.DeviceFinder;
-import com.google.android.apps.tvremote.PairingActivity;
-import com.google.android.apps.tvremote.RemoteDevice;
-import com.google.android.apps.tvremote.protocol.QueuingSender;
-import com.google.android.apps.tvremote.util.Debug;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -51,17 +42,14 @@ import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 /**
  * The sample control preference activity handles the preferences for
  * the sample control extension.
  */
-public class GTVRemotePreferenceActivity extends PreferenceActivity implements CoreServiceHandlerInterface {
-	private static RemoteDevice mRemoteDevice;
+public class GTVRemotePreferenceActivity extends PreferenceActivity {
     private static final int DIALOG_READ_ME = 1;
-	private CoreServiceHandler mCoreServiceHandler;
 
 	  /**
 	   * Request code used by this activity.
@@ -92,51 +80,29 @@ public class GTVRemotePreferenceActivity extends PreferenceActivity implements C
 	  private static final float BRIGHTNESS_OVERRIDE_NONE = -1.0f;
 	private static final String LOG_TAG = "GTV Remote Preference";
 
-	  private QueuingSender commands;
-
-	  private boolean isConnected;
-
 	  private boolean isKeepingConnection;
 
 	  private boolean isScreenDimmed;
 
 	  private Handler handler;
-	private Preference mPairingOk;
-	private Preference mDeviceFinder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mCoreServiceHandler = new CoreServiceHandler(this);
-        commands = new QueuingSender(mCoreServiceHandler.getMissingSenderToaster());
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.preference);
-
-        // Handle read me
-        /*Preference preference = findPreference(getText(R.string.preference_key_read_me));
-        preference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-            public boolean onPreferenceClick(Preference preference) {
-                showDialog(DIALOG_READ_ME);
-                return true;
-            }
-        });*/
         
-        mPairingOk = findPreference(getText(R.string.preference_key_pairing_ok));
-        mPairingOk.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        findPreference(getText(R.string.preference_key_pairing)).setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			
 			@Override
-			public boolean onPreferenceClick(Preference preference) {
-				showPairingActivity(mRemoteDevice);
+			public boolean onPreferenceClick(Preference preference) {			    
+				showPairingActivity();
 			    return true;
 			}
 		});
-        mPairingOk.setEnabled(false);
         
-        mDeviceFinder = findPreference(getText(R.string.preference_key_finder_label));
-        mDeviceFinder.setEnabled(false);
-        mDeviceFinder.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        findPreference(getText(R.string.preference_key_finder)).setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			
 			@Override
 			public boolean onPreferenceClick(Preference preference) {
@@ -190,60 +156,10 @@ public class GTVRemotePreferenceActivity extends PreferenceActivity implements C
 	   * When pairing finishes, PairingListener's method will be called to
 	   * differentiate the result.
 	   */
-	  private final void showPairingActivity(RemoteDevice target) {
-	    if (target != null) {
-	      startActivityForResult(
-	          PairingActivity.createIntent(this, new RemoteDevice(
-	              target.getName(), target.getAddress(), target.getPort() + 1)),
-	          CODE_PAIRING);
-	    }
+	  private final void showPairingActivity() {
 	  }
 
 
 		public void onShowDeviceFinder() {
-		    commands.setSender(null);
-		    logConnectionStatus("Show device finder");
-		    showSwitchBoxActivity();
-		}
-		
-
-		  /**
-		   * Starts the box selection dialog.
-		   */
-		  private final void showSwitchBoxActivity() {
-			ConnectionManager connectionManager = mCoreServiceHandler.getConnectionManager();
-			RemoteDevice target = connectionManager.getTarget();
-			ArrayList<RemoteDevice> recent = connectionManager.getRecentlyConnected();
-		    startActivityForResult(
-		        DeviceFinder.createConnectIntent(this, target, recent), 
-		        CODE_SWITCH_BOX);
-		  }
-		  
-
-
-		  public void onNeedsPairing(RemoteDevice remoteDevice) {
-		    logConnectionStatus("Pairing");
-		    showPairingActivity(remoteDevice);
-		  }
-
-		  private void logConnectionStatus(CharSequence sequence) {
-		    String message = String.format("%s (%s)", sequence,
-		        getClass().getSimpleName());
-		    if (Debug.isDebugConnection()) {
-		      Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-		    }
-		    Log.d(LOG_TAG, "Connection state: " + sequence);
-		  }
-
-		@Override
-		public void onServiceAvailable(CoreService coreService) {
-			mDeviceFinder.setEnabled(true);
-			mPairingOk.setEnabled(true);
-		}
-
-		@Override
-		public void onServiceDisconnecting(CoreService coreService) {
-			mDeviceFinder.setEnabled(false);
-			mPairingOk.setEnabled(false);			
 		}
 }

@@ -64,6 +64,10 @@ public class KeyCodeButton extends ImageView {
     initialize();
   }
 
+  public Code getKeyCode() {
+      return keyCode;
+  }
+
   public KeyCodeButton(Context context, AttributeSet attrs) {
     super(context, attrs);
 
@@ -86,9 +90,7 @@ public class KeyCodeButton extends ImageView {
   }
 
   private void initialize() {
-    //setScaleType(ScaleType.CENTER_INSIDE);
-    //setBackgroundDrawable(null);
-    //setBackgroundColor(Color.TRANSPARENT);
+    setScaleType(ScaleType.CENTER_INSIDE);
   }
 
   private void enableKeyCodeAction() {

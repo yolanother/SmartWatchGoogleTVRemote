@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.doubtech.livewatch.googletvremote"
+    android:layout_width="128px"
+    android:layout_height="128px">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/dpad"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <!-- Row 1 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1" >
+
+        <com.doubtech.livewatch.googletvremote.widgets.KeyCodeButton
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingRight="15px"
+            android:paddingBottom="15px"
+            android:src="@drawable/esc"
+            app:key_code="KEYCODE_ESCAPE" />
+
+        <com.doubtech.livewatch.googletvremote.widgets.KeyCodeButton
+            android:id="@+id/esc"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:key_code="KEYCODE_DPAD_UP" />
+        
+        <com.doubtech.livewatch.googletvremote.widgets.KeyCodeButton
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingLeft="15px"
+            android:paddingBottom="15px"
+            android:src="@drawable/menu"
+            app:key_code="KEYCODE_MENU" />
+        </LinearLayout>
+
+        <!-- Row 2 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1" >
+        
+        <com.doubtech.livewatch.googletvremote.widgets.KeyCodeButton
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:key_code="KEYCODE_DPAD_LEFT" />
+        
+        <com.doubtech.livewatch.googletvremote.widgets.KeyCodeButton
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:key_code="KEYCODE_ENTER" />
+        
+        <com.doubtech.livewatch.googletvremote.widgets.KeyCodeButton
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:key_code="KEYCODE_DPAD_RIGHT" />
+        </LinearLayout>
+
+        <!-- Row 3 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1" >
+    
+        <com.doubtech.livewatch.googletvremote.widgets.KeyCodeButton
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom|left"
+            android:paddingRight="15px"
+            android:paddingTop="15px"
+            android:layout_weight="1"
+            android:src="@drawable/back"
+            app:key_code="KEYCODE_BACK" />
+        
+        <com.doubtech.livewatch.googletvremote.widgets.KeyCodeButton
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:key_code="KEYCODE_DPAD_DOWN" />
+    
+        <com.doubtech.livewatch.googletvremote.widgets.KeyCodeButton
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:paddingLeft="15px"
+            android:paddingTop="15px"
+            android:src="@drawable/home"
+            app:key_code="KEYCODE_HOME" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -16,4 +16,6 @@
     <!-- Text drawn in control on Smart Wireless Headset pro-->
     <string name="sample_control_headset_pro_text">Press Prev or Next</string>
 
+    <string name="no_connection">Not connected.</string>
+    <string name="see_phone">See phone for pairing.</string>
 </resources>

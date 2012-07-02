@@ -2,115 +2,89 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res/com.doubtech.livewatch.googletvremote"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="128px"
+    android:layout_height="128px"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0px"
         android:layout_weight="1"
         android:orientation="horizontal" >
 
         <com.doubtech.livewatch.googletvremote.widgets.KeyCodeButton
-            android:id="@+id/rew"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/rew"
             app:key_code="KEYCODE_MEDIA_REWIND" />
 
         <com.doubtech.livewatch.googletvremote.widgets.KeyCodeButton
-            android:id="@+id/play"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/play"
             app:key_code="KEYCODE_MEDIA_PLAY" />
 
         <com.doubtech.livewatch.googletvremote.widgets.KeyCodeButton
-            android:id="@+id/ffwd"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/ffwd"
             app:key_code="KEYCODE_MEDIA_FAST_FORWARD" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
         android:layout_weight="1"
         android:orientation="horizontal" >
 
         <com.doubtech.livewatch.googletvremote.widgets.KeyCodeButton
-            android:id="@+id/volume_down"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/volume_down"
             app:key_code="KEYCODE_VOLUME_DOWN" />
 
         <com.doubtech.livewatch.googletvremote.widgets.KeyCodeButton
-            android:id="@+id/pause"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/pause"
             app:key_code="KEYCODE_PAUSE" />
 
         <com.doubtech.livewatch.googletvremote.widgets.KeyCodeButton
-            android:id="@+id/volume_up"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/volume_up"
             app:key_code="KEYCODE_VOLUME_UP" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
         android:layout_weight="1"
         android:orientation="horizontal" >
 
         <com.doubtech.livewatch.googletvremote.widgets.KeyCodeButton
-            android:id="@+id/channel_down"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/ch_down"
             app:key_code="KEYCODE_CHANNEL_DOWN" />
 
         <com.doubtech.livewatch.googletvremote.widgets.KeyCodeButton
-            android:id="@+id/mute"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_gravity="bottom|center_horizontal"
             android:src="@drawable/mute"
             app:key_code="KEYCODE_MUTE" />
 
         <com.doubtech.livewatch.googletvremote.widgets.KeyCodeButton
-            android:id="@+id/channel_up"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/ch_up"
             app:key_code="KEYCODE_CHANNEL_UP" />

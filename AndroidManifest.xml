@@ -6,6 +6,13 @@
 
     <uses-permission
         android:name="com.sonyericsson.extras.liveware.aef.EXTENSION_PERMISSION" />
+    
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
+    <uses-feature android:name="android.hardware.touchscreen" android:required="true" />
+    <uses-feature android:name="android.hardware.wifi" android:required="true" />
 
     <application android:icon="@drawable/app_icon" android:label="@string/app_name">
         <activity android:name=".GTVRemotePreferenceActivity" android:label="@string/preference_activity_title">
@@ -14,23 +21,7 @@
             </intent-filter>
         </activity>
 
-	    <activity android:name="com.google.android.apps.tvremote.DeviceFinder"
-	              android:theme="@android:style/Theme.Translucent.NoTitleBar"
-	              android:label="@string/finder_label"
-	              android:launchMode="singleTop"/>
-	
-	    <activity android:name="com.google.android.apps.tvremote.PairingActivity"
-	              android:theme="@android:style/Theme.Translucent.NoTitleBar"
-	              android:label="@string/pairing_activity_label"
-	              android:launchMode="singleTop"/>
-
         <service android:name=".GTVRemoteExtensionService" />
-    
-        <service android:name="com.google.android.apps.tvremote.CoreService"
-                 android:label="@string/core_service_label"
-                 android:enabled="true"
-                 android:exported="true"
-                 android:permission="android.permission.INTERNET"/>
 
         <receiver android:name=".ExtensionReceiver">
             <intent-filter>
@@ -59,14 +50,15 @@
                 <action android:name="com.sonyericsson.extras.aef.control.TOUCH_EVENT"/>
                 <action android:name="com.sonyericsson.extras.aef.control.SWIPE_EVENT"/>
             </intent-filter>
+            
         </receiver>
+		<!-- Anymote -->
+		<service android:name = "com.example.google.tv.anymotelibrary.client.AnymoteClientService"/>
+		<activity
+		    android:name="com.example.google.tv.anymotelibrary.connection.PairingActivity"
+		    android:configChanges="orientation"
+		    android:label="Pairing with TV"
+		    android:launchMode="singleTop" />
 
     </application>
-    
-  <uses-feature android:required="true" android:name="android.hardware.touchscreen" />
-  <uses-feature android:required="true" android:name="android.hardware.wifi" />
-  
-  <uses-permission android:name="android.permission.INTERNET" />
-  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-  <uses-permission android:name="android.permission.VIBRATE" />
 </manifest>

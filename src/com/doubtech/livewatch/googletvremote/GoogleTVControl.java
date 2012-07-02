@@ -31,50 +31,46 @@
 
 package com.doubtech.livewatch.googletvremote;
 
-import com.doubtech.livewatch.googletvremote.CoreServiceHandler.CoreServiceHandlerInterface;
+import com.doubtech.livewatch.googletvremote.widgets.KeyCodeButton;
 import com.doubtech.livewatch.googletvremote.widgets.SoftDpad;
 import com.doubtech.livewatch.googletvremote.widgets.SoftDpad.DpadListener;
-import com.google.android.apps.tvremote.ConnectionManager.ConnectionListener;
-import com.google.android.apps.tvremote.CoreService;
-import com.google.android.apps.tvremote.DeviceFinder;
-import com.google.android.apps.tvremote.PairingActivity;
-import com.google.android.apps.tvremote.RemoteDevice;
-import com.google.android.apps.tvremote.protocol.ICommandSender;
-import com.google.android.apps.tvremote.protocol.QueuingSender;
-import com.google.android.apps.tvremote.util.Action;
-import com.google.android.apps.tvremote.util.Debug;
+import com.example.google.tv.anymotelibrary.client.AnymoteClientService;
+import com.example.google.tv.anymotelibrary.client.AnymoteClientService.ClientListener;
+import com.example.google.tv.anymotelibrary.client.AnymoteSender;
+import com.google.anymote.Key.Code;
 import com.sonyericsson.extras.liveware.extension.util.view.HorizontalPager;
 import com.sonyericsson.extras.liveware.sdk.R;
 
+import android.content.ComponentName;
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.widget.Toast;
+import android.view.ViewGroup;
 
 /**
  * The sample control for SmartWatch handles the control on the accessory.
  * This class exists in one instance for every supported host application that
  * we have registered to
  */
-class GoogleTVControl extends HorizontalPager implements ConnectionListener, CoreServiceHandlerInterface {
+class GoogleTVControl extends HorizontalPager implements ClientListener {
 	private static final String TAG = "GoogleTVControl";
+	private static final boolean DEBUG = true;
 	  
 	private SoftDpad mDpad;
-
-	private View mChannelDown;
-
-	private View mChannelUp;
-
-	private final QueuingSender commands;
 	
-	private boolean isConnected;
-	
-	private boolean isKeepingConnection;
+	private AnymoteClientService mAnymoteClientService;
+    private AnymoteSender anymoteSender;
+    private boolean mBound;
 
-	private CoreServiceHandler mCoreServiceHandler;
+    private KeyCodeButton mChannelDown;
+    private KeyCodeButton mChannelUp;
 
     /**
      * Create sample control.
@@ -85,173 +81,101 @@ class GoogleTVControl extends HorizontalPager implements ConnectionListener, Cor
      */
     GoogleTVControl(final Context context, int device, final String hostAppPackageName) {
         super(context, device, hostAppPackageName);
+        
+        // Inflate all remote page views.
+        final LayoutInflater inflater = LayoutInflater.from(context);
+        final ViewGroup viewContainer = (ViewGroup)inflater.inflate(R.layout.remote_page_layout, null);
+        for(int i = 0; i < viewContainer.getChildCount(); i++) {
+	        final ViewGroup controlPage = (ViewGroup)viewContainer.getChildAt(i);
+	        setListeners(controlPage);
+	        addView(controlPage);
+        }
+    }
+    
+    OnTouchListener mKeyCodePressedListener = new OnTouchListener() {
 
-        mCoreServiceHandler = new CoreServiceHandler(context);
-        commands = new QueuingSender(mCoreServiceHandler.getMissingSenderToaster());
-        
-        addView(R.layout.playback_controls);
-        addView(R.layout.dpad);
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+        	if(DEBUG) {
+        		Log.d(TAG, "Pressed: " + ((KeyCodeButton)v).getKeyCode());
+        	}
+            if(null != anymoteSender) {
+                KeyCodeButton button = (KeyCodeButton)v;
+                anymoteSender.sendKeyPress(button.getKeyCode());
+            }
+            return true;
+        }
 
-        mChannelDown = findViewById(R.id.channel_down);
-        mChannelUp = findViewById(R.id.channel_up);
-        
-        
-        mDpad = (SoftDpad)findViewById(R.id.dpad);
-        mDpad.setDpadListener(new DpadListener() {
-			
-			@Override
-			public void onDpadMoved(int direction, boolean pressed) {
-				Log.d(TAG, "DPad moved: " + direction + " pressed?" + pressed);
-			}
-			
-			@Override
-			public void onDpadClicked() {
-				Log.d(TAG, "DPAD Clicked");
-			}
-		});
+    };
+
+    private void setListeners(ViewGroup controls) {
+        for(int i = 0; i < controls.getChildCount(); i++) {
+            View child = controls.getChildAt(i);
+            if(child instanceof ViewGroup) {
+                setListeners((ViewGroup)child);
+            } else if(child instanceof KeyCodeButton) {
+                child.setOnTouchListener(mKeyCodePressedListener);
+            }
+        }
+    }
+
+    /** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection mConnection = new ServiceConnection() {
+        /*
+         * ServiceConnection listener methods.
+         */
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mAnymoteClientService = ((AnymoteClientService.AnymoteClientServiceBinder) service)
+                    .getService();
+            mAnymoteClientService.attachClientListener(GoogleTVControl.this);
+        }
+
+        public void onServiceDisconnected(ComponentName name) {
+            mAnymoteClientService.detachClientListener(GoogleTVControl.this);
+            mAnymoteClientService = null;
+        }
+    };
+
+    @Override
+    public void onConnected(AnymoteSender anymoteSender) {
+        this.anymoteSender = anymoteSender;
+    }
+
+    @Override
+    public void onDisconnected() {
+        this.anymoteSender = null;
+    }
+
+    @Override
+    public void onConnectionError() {
+        this.anymoteSender = null;
     }
     
     @Override
-    public void onStart() {
-    	super.onStart();
-        setKeepConnected(true);
-    }
-
-    @Override
     public void onStop() {
-      setKeepConnected(false);
-      super.onStop();
+        super.onStop();
+        unbind();
+    }
+    
+    public void onPause() {
+        super.onPause();
+        unbind();
     }
 
+    private void unbind() {
+        if(mBound) {
+            mContext.unbindService(mConnection);
+            mBound = false;
+        }
+    }
+    
     @Override
     public void onResume() {
-      super.onResume();
-      connect();
+        super.onResume();
+        // Bind to the AnymoteClientService
+        Intent intent = new Intent(mContext, AnymoteClientService.class);
+        mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        mBound = true;
     }
-
-    @Override
-    public void onPause() {
-      disconnect();
-      super.onPause();
-    }
-
-
-    /**
-     * Translates a direction and a key pressed in an action.
-     *
-     * @param direction the direction of the movement
-     * @param pressed   {@code true} if the key was pressed
-     */
-	private static Action translateDirection(int direction, boolean pressed) {
-		if ((direction & SoftDpad.DOWN) > 0) {
-			return pressed ? Action.DPAD_DOWN_PRESSED
-					: Action.DPAD_DOWN_RELEASED;
-		}
-		if ((direction & SoftDpad.LEFT) > 0) {
-			return pressed ? Action.DPAD_LEFT_PRESSED
-					: Action.DPAD_LEFT_RELEASED;
-		}
-		if ((direction & SoftDpad.RIGHT) > 0) {
-			return pressed ? Action.DPAD_RIGHT_PRESSED
-					: Action.DPAD_RIGHT_RELEASED;
-		}
-		if ((direction & SoftDpad.UP) > 0) {
-			return pressed ? Action.DPAD_UP_PRESSED : Action.DPAD_UP_RELEASED;
-		}
-
-		return null;
-	}
-
-    private void connect() {
-      if (!isConnected) {
-        isConnected = true;
-        mCoreServiceHandler.executeWhenCoreServiceAvailable(new Runnable() {
-          public void run() {
-        	  mCoreServiceHandler.getConnectionManager().connect(GoogleTVControl.this);
-          }
-        });
-      }
-    }
-
-    private void disconnect() {
-      if (isConnected) {
-        commands.setSender(null);
-        isConnected = false;
-        mCoreServiceHandler.executeWhenCoreServiceAvailable(new Runnable() {
-          public void run() {
-        	  mCoreServiceHandler.getConnectionManager().disconnect(GoogleTVControl.this);
-          }
-        });
-      }
-    }
-
-    private void setKeepConnected(final boolean keepConnected) {
-      if (isKeepingConnection != keepConnected) {
-        isKeepingConnection = keepConnected;
-        mCoreServiceHandler.executeWhenCoreServiceAvailable(new Runnable() {
-          public void run() {
-            logConnectionStatus("Keep Connected: " + keepConnected);
-            mCoreServiceHandler.getConnectionManager().setKeepConnected(keepConnected);
-          }
-        });
-      }
-    }
-
-    private void logConnectionStatus(CharSequence sequence) {
-      String message = String.format("%s (%s)", sequence,
-          getClass().getSimpleName());
-      if (Debug.isDebugConnection()) {
-        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-      }
-      Log.d(TAG, "Connection state: " + sequence);
-    }
-
-	  /**
-	   * Starts the box selection dialog.
-	   */
-	  private final void showSwitchBoxActivity() {
-	    disconnect();
-	  }
-
-	@Override
-	public void onConnecting() {
-	    commands.setSender(null);
-	    logConnectionStatus("Connecting");
-	}
-
-	@Override
-	public void onConnectionSuccessful(ICommandSender sender) {
-	    logConnectionStatus("Connected");
-	    commands.setSender(sender);
-	}
-
-	@Override
-	public void onNeedsPairing(RemoteDevice remoteDevice) {
-	    logConnectionStatus("Pairing");
-        Toast.makeText(mContext, "Needs Pairing.", Toast.LENGTH_SHORT).show();
-	}
-
-	@Override
-	public void onDisconnected() {
-	    commands.setSender(null);
-	    logConnectionStatus("Disconnected");
-	}
-
-	@Override
-	public void onShowDeviceFinder() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onServiceAvailable(CoreService coreService) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onServiceDisconnecting(CoreService coreService) {
-		// TODO Auto-generated method stub
-		
-	}
+    
 }

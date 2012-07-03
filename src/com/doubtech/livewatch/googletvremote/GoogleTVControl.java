@@ -159,7 +159,7 @@ class GoogleTVControl extends HorizontalPager implements ClientListener {
     
     public void onPause() {
         super.onPause();
-        unbind();
+        //unbind();
     }
 
     private void unbind() {

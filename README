@@ -3,3 +3,7 @@ https://code.google.com/p/googletv-android-samples
 https://github.com/yolanother/EnhancedLivewareSdk.git
 
 Once you have these projects downloaded you need to add them to Eclipse as library projects.
+
+If you want to add new buttons to the watch remote you need to add a layout for the watch page in res/ and you need to update remote_page_layout.xml. See rp_playback_control.xml for an example.
+
+

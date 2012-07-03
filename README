@@ -1,0 +1,5 @@
+To build you need to check out the following projects:
+https://code.google.com/p/googletv-android-samples
+https://github.com/yolanother/EnhancedLivewareSdk.git
+
+Once you have these projects downloaded you need to add them to Eclipse as library projects.
